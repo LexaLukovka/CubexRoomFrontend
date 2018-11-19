@@ -4,6 +4,7 @@ import table from 'src/redux/table/action'
 
 const initMapStateToProps = store => ({
   rows: store.tableReducer.rows,
+  color: store.headerReducer.color,
 })
 
 const initMapDispatchToProps = dispatch => ({

@@ -14,15 +14,16 @@ const styles = () => ({
   },
   card: {
     padding: 20,
-    display: 'flex',
-    justifyContent: 'center',
+    background: 'rgba(255, 255, 255, 0.7)',
   },
 })
 
 class IndexScene extends React.Component {
   componentDidMount() {
     const { actions, rows } = this.props
-    actions.layout.background('/images/room.jpeg')
+    actions.layout.background('/images/blue.jpg')
+    actions.header.color('blue')
+
     document.title = 'Cubex'
 
     actions.table.getTime()
@@ -44,6 +45,7 @@ class IndexScene extends React.Component {
         <Card className={classes.card}>
           <div>
             <MyTableHead />
+
             <MyTableBody />
           </div>
         </Card>

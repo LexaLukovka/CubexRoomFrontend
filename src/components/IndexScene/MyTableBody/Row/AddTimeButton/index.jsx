@@ -1,13 +1,34 @@
 /* eslint-disable no-return-assign */
 import React from 'react'
-import { number, object } from 'prop-types'
+import { number, string, object } from 'prop-types'
+import classNames from 'classnames'
 import { Button, withStyles } from '@material-ui/core'
-import connector from '../connector'
+import connector from '../../connector'
 
 const styles = theme => ({
-  default: {},
-  primary: {
+  green: {
+    background: '#0d5e1c',
+    color: theme.palette.secondary.light,
+    '&:hover': {
+      color: 'inherit',
+    },
+  },
+  red: {
+    background: '#68062c',
+    color: theme.palette.secondary.light,
+    '&:hover': {
+      color: 'inherit',
+    },
+  },
+  blue: {
     background: theme.palette.primary.main,
+    color: theme.palette.secondary.light,
+    '&:hover': {
+      color: 'inherit',
+    },
+  },
+  purple: {
+    background: '#442757',
     color: theme.palette.secondary.light,
     '&:hover': {
       color: 'inherit',
@@ -23,9 +44,9 @@ class AddTimeButton extends React.Component {
   }
 
   render() {
-    const { classes, rowId, value } = this.props
+    const { classes, rowId, value, color } = this.props
     return <Button
-      className={value.selected ? classes.primary : classes.default}
+      className={value.selected ? classNames(classes[color]) : null}
       onClick={() => this.handleClick(rowId, value)}
     >
       {value.time}
@@ -39,6 +60,7 @@ AddTimeButton.propTypes = {
   actions: object.isRequired,
   rowId: number.isRequired,
   value: object.isRequired,
+  color: string.isRequired,
 }
 
 export default withStyles(styles)(connector(AddTimeButton))

@@ -1,16 +1,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
 import React from 'react'
-import { object } from 'prop-types'
+import { object, string } from 'prop-types'
+import classNames from 'classnames'
 import { Link } from 'react-router-dom'
-import { AppBar, Toolbar, Typography, withStyles } from '@material-ui/core'
+import { Toolbar, Typography, withStyles } from '@material-ui/core'
+import connector from './connector'
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     color: 'white',
-  },
-  appBar: {
-    background: theme.palette.primary.main,
   },
   toolbar: {
     display: 'flex',
@@ -24,21 +23,22 @@ const styles = theme => ({
   },
 })
 
-const Header = ({ classes }) =>
+const Header = ({ classes, color }) =>
   <header className={classes.root}>
-    <AppBar className={classes.appBar}>
+    <div className={classNames(color)}>
       <Toolbar className={classes.toolbar}>
 
         <Typography variant="title" color="secondary" className={classes.title}>
-          <Link to="/">Бронирование переговорок</Link>
+          <Link to="/">Бронирование зала для заседаний</Link>
         </Typography>
 
       </Toolbar>
-    </AppBar>
+    </div>
   </header>
 
 Header.propTypes = {
   classes: object.isRequired,
+  color: string.isRequired,
 }
 
-export default withStyles(styles)(Header)
+export default withStyles(styles)(connector(Header))

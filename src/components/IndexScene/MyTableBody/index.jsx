@@ -2,16 +2,14 @@
 import React from 'react'
 import { array, object } from 'prop-types'
 import { Paper, Table, TableBody, TableCell, TableRow, withStyles } from '@material-ui/core'
-import AddTimeButton from './AddTimeButton'
 import connector from './connector'
+import Row from './Row'
 
 const styles = () => ({
   root: {
     width: '100%',
     overflowX: 'auto',
-  },
-  table: {
-    minWidth: 700,
+    background: 'rgba(255, 255, 255, 0.35)',
   },
 })
 
@@ -19,14 +17,11 @@ const MyTableBody = ({ classes, rows }) =>
   <div className={classes.root}>
     <Paper className={classes.root}>
       <Table className={classes.table}>
-        <TableBody>
+        <TableBody className={classes.body}>
           {rows.map(rowsDay =>
             <TableRow key={rowsDay.id}>
-              {rowsDay.row.map((row, index) =>
-                <React.Fragment key={index}>
-                  <TableCell component="th" scope="row">{row.day}</TableCell>
-                  <TableCell numeric> <AddTimeButton rowId={rowsDay.id} value={row} /> </TableCell>
-                </React.Fragment>)}
+              <TableCell component="th" scope="row">{rowsDay.day}</TableCell>
+              <Row rowsDay={rowsDay} />
             </TableRow>)}
         </TableBody>
       </Table>

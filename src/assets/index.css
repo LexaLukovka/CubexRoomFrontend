@@ -48,3 +48,19 @@ a {
 .self {
     align-self: center;
 }
+
+.green {
+    background: #0d5e1c;
+}
+
+.red {
+    background: #68062c;
+}
+
+.blue {
+    background: #142b3d;
+}
+
+.purple {
+    background: #442757;
+}
