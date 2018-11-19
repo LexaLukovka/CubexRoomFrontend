@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import table from 'src/redux/table/action'
 
 const initMapStateToProps = store => ({
-  data: store.tableReducer.data,
+  rows: store.tableReducer.rows,
 })
 
 const initMapDispatchToProps = dispatch => ({

@@ -1,9 +1,12 @@
 import React from 'react'
-import { object } from 'prop-types'
-import { withStyles, Card } from '@material-ui/core'
-import connector from './connector'
+import { array, object } from 'prop-types'
+import { Card, withStyles } from '@material-ui/core'
+
 import MyTableHead from './MyTableHead'
 import MyTableBody from './MyTableBody'
+
+import LocalStorage from 'services/LocalStorage'
+import connector from './connector'
 
 const styles = () => ({
   root: {
@@ -18,9 +21,15 @@ const styles = () => ({
 
 class IndexScene extends React.Component {
   componentDidMount() {
-    const { actions } = this.props
+    const { actions, rows } = this.props
     actions.layout.background('/images/room.jpeg')
     document.title = 'Cubex'
+
+    actions.table.getTime()
+
+    if (!LocalStorage.get('rows')) {
+      LocalStorage.put('rows', rows)
+    }
   }
 
   componentWillUnmount() {
@@ -46,6 +55,7 @@ class IndexScene extends React.Component {
 IndexScene.propTypes = {
   classes: object.isRequired,
   actions: object.isRequired,
+  rows: array.isRequired,
 }
 
 export default withStyles(styles)(connector(IndexScene))

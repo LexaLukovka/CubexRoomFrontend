@@ -1,10 +1,11 @@
 /* eslint-disable no-return-assign */
 import React from 'react'
-import { number, object, array, string } from 'prop-types'
+import { number, object } from 'prop-types'
 import { Button, withStyles } from '@material-ui/core'
 import connector from '../connector'
 
 const styles = theme => ({
+  default: {},
   primary: {
     background: theme.palette.primary.main,
     color: theme.palette.secondary.light,
@@ -18,21 +19,16 @@ class AddTimeButton extends React.Component {
   handleClick = (id, value) => {
     const { actions } = this.props
     actions.table.addTime(id, value)
-  }
-
-  checkColor = (rowId, value, data) => {
-    let isCheck = false
-    data.forEach(values => (rowId === values.id && value === values.time) && (isCheck = !isCheck))
-    return isCheck
+    actions.table.getTime()
   }
 
   render() {
-    const { classes, rowId, value, data } = this.props
+    const { classes, rowId, value } = this.props
     return <Button
-      className={this.checkColor(rowId, value, data) && classes.primary}
+      className={value.selected ? classes.primary : classes.default}
       onClick={() => this.handleClick(rowId, value)}
     >
-      {value}
+      {value.time}
     </Button>
   }
 }
@@ -41,9 +37,8 @@ class AddTimeButton extends React.Component {
 AddTimeButton.propTypes = {
   classes: object.isRequired,
   actions: object.isRequired,
-  data: array.isRequired,
   rowId: number.isRequired,
-  value: string.isRequired,
+  value: object.isRequired,
 }
 
 export default withStyles(styles)(connector(AddTimeButton))
