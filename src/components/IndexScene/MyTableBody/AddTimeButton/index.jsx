@@ -8,14 +8,14 @@ import moment from 'moment'
 
 const styles = theme => ({
   green: {
-    background: '#0d5e1c',
+    background: '#4caf50',
     color: theme.palette.secondary.light,
     '&:hover': {
       color: 'inherit',
     },
   },
   red: {
-    background: '#68062c',
+    background: theme.palette.secondary.dark,
     color: theme.palette.secondary.light,
     '&:hover': {
       color: 'inherit',
@@ -29,7 +29,7 @@ const styles = theme => ({
     },
   },
   purple: {
-    background: '#442757',
+    background: '#9c27b0',
     color: theme.palette.secondary.light,
     '&:hover': {
       color: 'inherit',

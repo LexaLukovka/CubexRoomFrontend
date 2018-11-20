@@ -25,9 +25,9 @@ class MyCalendar extends React.Component {
     const index = data.map(day => day.date).indexOf(selectedDate)
 
     if (index > -1) {
-      return '#6cf47d'
+      return '#6e64ff'
     }
-    return '#00dbfc'
+    return 'rgb(146, 118, 255)'
   }
 
   render() {
@@ -35,12 +35,25 @@ class MyCalendar extends React.Component {
     return (
       <div className={classes.root}>
         <InfiniteCalendar
-          width={1200}
+          width={600}
           height={400}
           selected={data.map(day => day.date)}
           Component={withMultipleDates(Calendar)}
           onSelect={(date) => this.handleSelect(date)}
-          theme={{ selectionColor: this.chooseColor }}
+          theme={{
+            selectionColor: this.chooseColor,
+            textColor: {
+              default: '#333',
+              active: '#FFF',
+            },
+            weekdayColor: 'rgb(146, 118, 255)',
+            headerColor: 'rgb(127, 95, 251)',
+            floatingNav: {
+              background: 'rgba(81, 67, 138, 0.96)',
+              color: '#FFF',
+              chevron: '#FFA726',
+            },
+          }}
           interpolateSelection={multipleDateInterpolation(data.map(day => day.date))}
         />
       </div>

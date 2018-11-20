@@ -11,31 +11,6 @@ const styles = theme => ({
     padding: 10,
     background: 'rgba(255, 255, 255, 0.4)',
   },
-
-  green: {
-    padding: '0 20px',
-    margin: 10,
-    background: '#0d5e1c',
-    color: theme.palette.secondary.main,
-  },
-  red: {
-    padding: '0 20px',
-    margin: 10,
-    background: '#68062c',
-    color: theme.palette.secondary.main,
-  },
-  blue: {
-    padding: '0 20px',
-    margin: 10,
-    background: theme.palette.primary.main,
-    color: theme.palette.secondary.main,
-  },
-  purple: {
-    padding: '0 20px',
-    margin: 10,
-    background: '#442757',
-    color: theme.palette.secondary.main,
-  },
   table: {
     width: '100%',
     margin: '5px',
@@ -43,7 +18,7 @@ const styles = theme => ({
     gridAutoFlow: 'dense',
     gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('lg')]: {
       gridTemplateColumns: '1fr 1fr 1fr',
       margin: '0',
       gridRowGap: '5px',
