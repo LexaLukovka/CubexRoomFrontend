@@ -8,26 +8,23 @@ const styles = theme => ({
   green: {
     padding: '0 20px',
     margin: 10,
-    background: '#0d5e1c',
-    color: theme.palette.secondary.main,
+    color: '#4caf50',
   },
   red: {
     padding: '0 20px',
     margin: 10,
-    background: '#68062c',
-    color: theme.palette.secondary.main,
+    color: theme.palette.secondary.dark,
   },
   blue: {
     padding: '0 20px',
     margin: 10,
-    background: theme.palette.primary.main,
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
+
   },
   purple: {
     padding: '0 20px',
     margin: 10,
-    background: '#442757',
-    color: theme.palette.secondary.main,
+    color: '#9c27b0',
   },
 })
 

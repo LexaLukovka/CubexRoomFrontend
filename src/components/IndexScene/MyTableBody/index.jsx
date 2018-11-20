@@ -1,33 +1,42 @@
 /* eslint-disable no-shadow */
 import React from 'react'
 import { array, object } from 'prop-types'
-import { Paper, Table, TableBody, TableCell, TableRow, withStyles } from '@material-ui/core'
-import Row from './Row'
-import checkSize from 'utils/checkSize'
+import { Paper, withStyles } from '@material-ui/core'
 import connector from './connector'
+import AddTimeButton from './AddTimeButton'
 
-const styles = () => ({
+const styles = theme => ({
   root: {
     width: '100%',
-    overflowX: 'auto',
-    background: 'rgba(255, 255, 255, 0.35)',
+    padding: 10,
+    background: 'rgba(255, 255, 255, 0.4)',
+  },
+  table: {
+    width: '100%',
+    margin: '5px',
+    display: 'grid',
+    gridAutoFlow: 'dense',
+    gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
+
+    [theme.breakpoints.down('lg')]: {
+      gridTemplateColumns: '1fr 1fr 1fr',
+      margin: '0',
+      gridRowGap: '5px',
+      textAlign: 'center',
+    },
   },
 })
 
 const MyTableBody = ({ classes, rows }) =>
-  <div className={classes.root}>
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableBody className={classes.body}>
-          {rows.map(rowsDay =>
-            <TableRow key={rowsDay.id}>
-              <TableCell component="th" scope="row">{checkSize(rowsDay.day)}</TableCell>
-              <Row rowsDay={rowsDay} />
-            </TableRow>)}
-        </TableBody>
-      </Table>
-    </Paper>
-  </div>
+  <Paper className={classes.root}>
+    <div className={classes.table}>
+      {rows.map((row, index) =>
+        <div key={index} className={classes.rows}>
+          <AddTimeButton value={row} />
+        </div>)}
+    </div>
+  </Paper>
+
 
 MyTableBody.propTypes = {
   classes: object.isRequired,
