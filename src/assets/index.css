@@ -39,3 +39,28 @@ a {
     text-decoration: none;
     color: inherit;
 }
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.self {
+    align-self: center;
+}
+
+.green {
+    background: #4caf50;
+}
+
+.red {
+    background: #f44336;
+}
+
+.blue {
+    background: #438afe;
+}
+
+.purple {
+    background: #9c27b0;
+}

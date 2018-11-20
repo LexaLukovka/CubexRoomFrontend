@@ -1,12 +1,15 @@
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import calendar from 'src/redux/calendar/action'
 
 const initMapStateToProps = store => ({
-  color: store.headerReducer.color,
+  data: store.tableReducer.data,
 })
 
 const initMapDispatchToProps = dispatch => ({
-  actions: {},
+  actions: {
+    calendar: bindActionCreators(calendar, dispatch),
+  },
 })
 
 export default connect(initMapStateToProps, initMapDispatchToProps)

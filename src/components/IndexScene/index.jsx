@@ -1,19 +1,43 @@
 import React from 'react'
-import { object } from 'prop-types'
-import { withStyles } from '@material-ui/core'
+import { array, object } from 'prop-types'
+import { Card, withStyles } from '@material-ui/core'
+
+import MyCalendar from './MyCalendar'
+import MyTableHead from './MyTableHead'
+import MyTableBody from './MyTableBody'
+
+import LocalStorage from 'services/LocalStorage'
 import connector from './connector'
 
-const styles = () => ({
+const styles = theme => ({
   root: {
-    paddingTop: 30,
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginTop: 30,
+    [theme.breakpoints.down('md ')]: {
+      flexDirection: 'column',
+    },
+  },
+  card: {
+    padding: 20,
+    height: '100%',
+    background: 'rgba(255, 255, 255, 0.7)',
   },
 })
 
 class IndexScene extends React.Component {
   componentDidMount() {
-    const { actions } = this.props
-    actions.layout.background('/images/room.jpeg')
+    const { actions, rows } = this.props
+    actions.layout.background('/images/blue.jpg')
+    actions.header.color('blue')
+
     document.title = 'Cubex'
+
+    actions.table.getRows()
+
+    if (!LocalStorage.get('rows')) {
+      LocalStorage.put('rows', rows)
+    }
   }
 
   componentWillUnmount() {
@@ -25,7 +49,13 @@ class IndexScene extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        aa
+        <MyCalendar />
+        <Card className={classes.card}>
+          <div>
+            <MyTableHead />
+            <MyTableBody />
+          </div>
+        </Card>
       </div>
     )
   }
@@ -34,6 +64,7 @@ class IndexScene extends React.Component {
 IndexScene.propTypes = {
   classes: object.isRequired,
   actions: object.isRequired,
+  rows: array.isRequired,
 }
 
 export default withStyles(styles)(connector(IndexScene))
