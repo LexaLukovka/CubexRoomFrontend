@@ -2,6 +2,7 @@ import React from 'react'
 import { array, object } from 'prop-types'
 import { Card, withStyles } from '@material-ui/core'
 
+import MyCalendar from './MyCalendar'
 import MyTableHead from './MyTableHead'
 import MyTableBody from './MyTableBody'
 
@@ -42,10 +43,10 @@ class IndexScene extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
+        <MyCalendar />
         <Card className={classes.card}>
           <div>
             <MyTableHead />
-
             <MyTableBody />
           </div>
         </Card>

@@ -2,8 +2,9 @@
 import React from 'react'
 import { array, object } from 'prop-types'
 import { Paper, Table, TableBody, TableCell, TableRow, withStyles } from '@material-ui/core'
-import connector from './connector'
 import Row from './Row'
+import checkSize from 'utils/checkSize'
+import connector from './connector'
 
 const styles = () => ({
   root: {
@@ -20,7 +21,7 @@ const MyTableBody = ({ classes, rows }) =>
         <TableBody className={classes.body}>
           {rows.map(rowsDay =>
             <TableRow key={rowsDay.id}>
-              <TableCell component="th" scope="row">{rowsDay.day}</TableCell>
+              <TableCell component="th" scope="row">{checkSize(rowsDay.day)}</TableCell>
               <Row rowsDay={rowsDay} />
             </TableRow>)}
         </TableBody>

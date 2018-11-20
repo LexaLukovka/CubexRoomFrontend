@@ -1,4 +1,4 @@
-/* eslint-disable no-shadow,no-return-assign */
+/* eslint-disable no-shadow,no-return-assign,prefer-destructuring */
 import LocalStorage from 'services/LocalStorage'
 import { ADD_TIME, GET_TIME } from './action'
 import { isEmpty } from 'lodash'
@@ -7,44 +7,22 @@ import { isEmpty } from 'lodash'
 let id = -1
 
 function createData(day) {
-  const row = []
-  const selected = false
   id += 1
-
-  const ten = { time: '10:00', selected }
-  const eleven = { time: '11:00', selected }
-  const twelve = { time: '12:00', selected }
-  const thirteen = { time: '13:00', selected }
-  const fourteen = { time: '14:00', selected }
-  const fifteen = { time: '15:00', selected }
-  const sixteen = { time: '16:00', selected }
-  const seventeen = { time: '17:00', selected }
-  const eighteen = { time: '18:00', selected }
-
-  row.push(ten)
-  row.push(eleven)
-  row.push(twelve)
-  row.push(thirteen)
-  row.push(fourteen)
-  row.push(fifteen)
-  row.push(sixteen)
-  row.push(seventeen)
-  row.push(eighteen)
-
+  const row = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00']
   return { id, day, row }
 }
 
 const rows = [
-  createData('Понедельник'),
-  createData('Вторник'),
-  createData('Среда'),
-  createData('Четверг'),
-  createData('Пятница'),
+  createData('green'),
+  createData('red'),
+  createData('blue'),
+  createData('purple'),
 ]
 
 const initialState = {
   id: null,
   rows: LocalStorage.get('rows') || rows,
+  data: LocalStorage.get('data') || [],
 }
 
 const tableReducer = (state = initialState, { type, rowId, payload }) => {
@@ -56,17 +34,21 @@ const tableReducer = (state = initialState, { type, rowId, payload }) => {
       }
 
     case ADD_TIME: {
-      const { rows } = state
+      const { rows, data } = state
+      let id = ''
+      let time = ''
 
       rows.map(values =>
         values.row.map(row =>
-          values.id === rowId && row.time === payload.time &&
-          (row.selected = !row.selected)))
+          values.id === rowId && row === payload &&
+          (id = values.id) && (time = row)))
 
-      LocalStorage.put('rows', rows)
+      data.push({ id, time })
+
+      LocalStorage.put('data', data)
       return {
         ...state,
-        rows,
+        data,
       }
     }
 

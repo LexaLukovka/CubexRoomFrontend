@@ -49,7 +49,7 @@ class AddTimeButton extends React.Component {
       className={value.selected ? classNames(classes[color]) : null}
       onClick={() => this.handleClick(rowId, value)}
     >
-      {value.time}
+      {value}
     </Button>
   }
 }
@@ -59,7 +59,7 @@ AddTimeButton.propTypes = {
   classes: object.isRequired,
   actions: object.isRequired,
   rowId: number.isRequired,
-  value: object.isRequired,
+  value: string.isRequired,
   color: string.isRequired,
 }
 
