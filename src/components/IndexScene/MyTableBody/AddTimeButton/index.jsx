@@ -1,13 +1,35 @@
 /* eslint-disable no-return-assign */
 import React from 'react'
-import { number, object } from 'prop-types'
+import { array, object, string } from 'prop-types'
+import classNames from 'classnames'
 import { Button, withStyles } from '@material-ui/core'
 import connector from '../connector'
+import moment from 'moment'
 
 const styles = theme => ({
-  default: {},
-  primary: {
+  green: {
+    background: '#4caf50',
+    color: theme.palette.secondary.light,
+    '&:hover': {
+      color: 'inherit',
+    },
+  },
+  red: {
+    background: theme.palette.secondary.dark,
+    color: theme.palette.secondary.light,
+    '&:hover': {
+      color: 'inherit',
+    },
+  },
+  blue: {
     background: theme.palette.primary.main,
+    color: theme.palette.secondary.light,
+    '&:hover': {
+      color: 'inherit',
+    },
+  },
+  purple: {
+    background: '#9c27b0',
     color: theme.palette.secondary.light,
     '&:hover': {
       color: 'inherit',
@@ -16,19 +38,33 @@ const styles = theme => ({
 })
 
 class AddTimeButton extends React.Component {
-  handleClick = (id, value) => {
-    const { actions } = this.props
-    actions.table.addTime(id, value)
+  handleClick = (value) => {
+    const { actions, color, calendar } = this.props
+    actions.table.addTime({ color, value, calendar })
     actions.table.getTime()
   }
 
+  isCheck = (value) => {
+    const { data, color, calendar } = this.props
+    let isChecked = false
+
+    data.map(values =>
+      values.color === color &&
+      values.time === value &&
+      values.date === moment(calendar)
+        .format('YYYY-MM-DD') &&
+      (isChecked = !isChecked))
+
+    return isChecked
+  }
+
   render() {
-    const { classes, rowId, value } = this.props
+    const { classes, value, color } = this.props
     return <Button
-      className={value.selected ? classes.primary : classes.default}
-      onClick={() => this.handleClick(rowId, value)}
+      className={this.isCheck(value) ? classNames(classes[color]) : null}
+      onClick={() => this.handleClick(value)}
     >
-      {value.time}
+      {value}
     </Button>
   }
 }
@@ -37,8 +73,10 @@ class AddTimeButton extends React.Component {
 AddTimeButton.propTypes = {
   classes: object.isRequired,
   actions: object.isRequired,
-  rowId: number.isRequired,
-  value: object.isRequired,
+  value: string.isRequired,
+  color: string.isRequired,
+  data: array.isRequired,
+  calendar: string.isRequired,
 }
 
 export default withStyles(styles)(connector(AddTimeButton))
