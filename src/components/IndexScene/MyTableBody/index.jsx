@@ -1,22 +1,17 @@
 /* eslint-disable no-shadow */
 import React from 'react'
 import { array, object } from 'prop-types'
-import { Button, Divider, Paper, withStyles } from '@material-ui/core'
-import Row from './Row'
-import classNames from 'classnames'
-import checkSize from 'utils/checkSize'
+import { Paper, withStyles } from '@material-ui/core'
 import connector from './connector'
+import AddTimeButton from './AddTimeButton'
 
 const styles = theme => ({
   root: {
     width: '100%',
-    overflowX: 'auto',
-    background: 'rgba(255, 255, 255, 0.35)',
+    padding: 10,
+    background: 'rgba(255, 255, 255, 0.4)',
   },
-  rows: {
-    display: 'flex',
-    alignItems: 'center',
-  },
+
   green: {
     padding: '0 20px',
     margin: 10,
@@ -41,43 +36,34 @@ const styles = theme => ({
     background: '#442757',
     color: theme.palette.secondary.main,
   },
+  table: {
+    width: '100%',
+    margin: '5px',
+    display: 'grid',
+    gridAutoFlow: 'dense',
+    gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
+
+    [theme.breakpoints.down('sm')]: {
+      gridTemplateColumns: '1fr 1fr 1fr',
+      margin: '0',
+      gridRowGap: '5px',
+      textAlign: 'center',
+    },
+  },
 })
 
-class MyTableBody extends React.Component {
-  handleClick = (color) => {
-    const { actions } = this.props
-    actions.layout.background(`/images/${color}.jpg`)
-    actions.header.color(color)
-  }
+const MyTableBody = ({ classes, rows }) =>
+  <Paper className={classes.root}>
+    <div className={classes.table}>
+      {rows.map((row, index) =>
+        <div key={index} className={classes.rows}>
+          <AddTimeButton value={row} />
+        </div>)}
+    </div>
+  </Paper>
 
-  render() {
-    const { classes, rows } = this.props
-    return (
-      <div className={classes.root}>
-        <Paper className={classes.root}>
-          <div className={classes.table}>
-            {rows.map(rowsDay =>
-              <React.Fragment key={rowsDay.id}>
-                <div className={classes.rows}>
-                  <Button
-                    className={classNames(classes[rowsDay.day])}
-                    onClick={() => this.handleClick(rowsDay.day)}
-                  >
-                    {checkSize(rowsDay.day)}
-                  </Button>
-                  <Row rowsDay={rowsDay} />
-                </div>
-                <Divider />
-              </React.Fragment>)}
-          </div>
-        </Paper>
-      </div>
-    )
-  }
-}
 
 MyTableBody.propTypes = {
-  actions: object.isRequired,
   classes: object.isRequired,
   rows: array.isRequired,
 }

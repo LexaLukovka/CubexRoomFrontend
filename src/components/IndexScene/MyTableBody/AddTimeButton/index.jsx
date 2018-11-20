@@ -1,9 +1,9 @@
 /* eslint-disable no-return-assign */
 import React from 'react'
-import { array, number, object, string } from 'prop-types'
+import { array, object, string } from 'prop-types'
 import classNames from 'classnames'
 import { Button, withStyles } from '@material-ui/core'
-import connector from '../../connector'
+import connector from '../connector'
 import moment from 'moment'
 
 const styles = theme => ({
@@ -38,30 +38,31 @@ const styles = theme => ({
 })
 
 class AddTimeButton extends React.Component {
-  handleClick = (id, value) => {
-    const { actions, calendar } = this.props
-    actions.table.addTime({ id, value, calendar })
+  handleClick = (value) => {
+    const { actions, color, calendar } = this.props
+    actions.table.addTime({ color, value, calendar })
     actions.table.getTime()
   }
 
-  isCheck = (rowId, value) => {
-    const { data, calendar } = this.props
+  isCheck = (value) => {
+    const { data, color, calendar } = this.props
     let isChecked = false
 
     data.map(values =>
-      values.id === rowId &&
+      values.color === color &&
       values.time === value &&
-      values.date === moment(calendar).format('YYYY-MM-DD') &&
+      values.date === moment(calendar)
+        .format('YYYY-MM-DD') &&
       (isChecked = !isChecked))
 
     return isChecked
   }
 
   render() {
-    const { classes, rowId, value, color } = this.props
+    const { classes, value, color } = this.props
     return <Button
-      className={this.isCheck(rowId, value) ? classNames(classes[color]) : null}
-      onClick={() => this.handleClick(rowId, value)}
+      className={this.isCheck(value) ? classNames(classes[color]) : null}
+      onClick={() => this.handleClick(value)}
     >
       {value}
     </Button>
@@ -72,7 +73,6 @@ class AddTimeButton extends React.Component {
 AddTimeButton.propTypes = {
   classes: object.isRequired,
   actions: object.isRequired,
-  rowId: number.isRequired,
   value: string.isRequired,
   color: string.isRequired,
   data: array.isRequired,

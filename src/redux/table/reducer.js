@@ -3,25 +3,10 @@ import LocalStorage from 'services/LocalStorage'
 import { ADD_TIME, GET_ROWS, GET_TIME } from './action'
 import { isEmpty } from 'lodash'
 
-
-let id = -1
-
-function createData(day) {
-  id += 1
-  const row = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00']
-  return { id, day, row }
-}
-
-const rows = [
-  createData('green'),
-  createData('red'),
-  createData('blue'),
-  createData('purple'),
-]
+const row = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00']
 
 const initialState = {
-  isChecked: false,
-  rows: LocalStorage.get('rows') || rows,
+  rows: LocalStorage.get('rows') || row,
   data: LocalStorage.get('data') || [],
 }
 
@@ -43,12 +28,12 @@ const tableReducer = (state = initialState, { type, payload }) => {
       const { data } = state
 
       const indexSelected = data.findIndex(dataItem =>
-        dataItem.id === payload.id && dataItem.time === payload.value && dataItem.date === payload.calendar)
+        dataItem.color === payload.color && dataItem.time === payload.value && dataItem.date === payload.calendar)
 
       if (indexSelected > -1) {
         data.splice(indexSelected, 1)
       } else {
-        data.push({ id: payload.id, time: payload.value, date: payload.calendar })
+        data.push({ color: payload.color, time: payload.value, date: payload.calendar })
       }
 
       LocalStorage.put('data', data)
