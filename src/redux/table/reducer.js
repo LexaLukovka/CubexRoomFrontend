@@ -1,7 +1,8 @@
 /* eslint-disable no-shadow,no-return-assign,prefer-destructuring */
 import LocalStorage from 'services/LocalStorage'
-import { ADD_TIME, GET_TIME } from './action'
+import { ADD_TIME, GET_ROWS, GET_TIME } from './action'
 import { isEmpty } from 'lodash'
+import moment from 'moment'
 
 
 let id = -1
@@ -20,30 +21,40 @@ const rows = [
 ]
 
 const initialState = {
-  id: null,
+  isChecked: false,
   rows: LocalStorage.get('rows') || rows,
   data: LocalStorage.get('data') || [],
 }
 
-const tableReducer = (state = initialState, { type, rowId, payload }) => {
+const tableReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case GET_TIME:
+    case GET_ROWS:
       return {
         ...state,
         rows: LocalStorage.get('rows') || [],
       }
 
+    case GET_TIME:
+      return {
+        ...state,
+        data: LocalStorage.get('data') || [],
+      }
+
     case ADD_TIME: {
       const { rows, data } = state
-      let id = ''
-      let time = ''
 
       rows.map(values =>
         values.row.map(row =>
-          values.id === rowId && row === payload &&
-          (id = values.id) && (time = row)))
+          (values.id === payload.id && row === payload.value) &&
+          (data.map((values, index) =>
+            ((values.id === payload.id &&
+              values.time === payload.value &&
+              values.date === moment(payload.calendar)
+                .format('YYYY-MM-DD'))
+              ? (data.splice(index, 1))
+              : data.push({ id: payload.id, time: payload.value, date: payload.calendar }))))))
 
-      data.push({ id, time })
+      // data.push({ id: payload.id, time: payload.value, date: payload.calendar })
 
       LocalStorage.put('data', data)
       return {

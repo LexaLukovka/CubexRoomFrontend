@@ -2,6 +2,8 @@ import React from 'react'
 import { object } from 'prop-types'
 import { withStyles } from '@material-ui/core'
 import InfiniteCalendar from 'react-infinite-calendar'
+import moment from 'moment'
+import connector from './connector'
 
 const styles = {
   root: {
@@ -13,7 +15,8 @@ const styles = {
 
 class Calendar extends React.Component {
   handleSelect = (selectedDate) => {
-    console.log(selectedDate)
+    const { actions } = this.props
+    actions.calendar.addDay(moment(selectedDate).format('YYYY-MM-DD'))
   }
 
   render() {
@@ -36,6 +39,7 @@ class Calendar extends React.Component {
 
 Calendar.propTypes = {
   classes: object.isRequired,
+  actions: object.isRequired,
 }
 
-export default withStyles(styles)(Calendar)
+export default withStyles(styles)(connector(Calendar))

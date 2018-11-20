@@ -1,9 +1,10 @@
 /* eslint-disable no-return-assign */
 import React from 'react'
-import { number, string, object } from 'prop-types'
+import { array, number, object, string } from 'prop-types'
 import classNames from 'classnames'
 import { Button, withStyles } from '@material-ui/core'
 import connector from '../../connector'
+import moment from 'moment'
 
 const styles = theme => ({
   green: {
@@ -38,15 +39,28 @@ const styles = theme => ({
 
 class AddTimeButton extends React.Component {
   handleClick = (id, value) => {
-    const { actions } = this.props
-    actions.table.addTime(id, value)
+    const { actions, calendar } = this.props
+    actions.table.addTime({ id, value, calendar })
     actions.table.getTime()
+  }
+
+  isCheck = (rowId, value) => {
+    const { data, calendar } = this.props
+    let isChecked = false
+
+    data.map(values =>
+      values.id === rowId &&
+      values.time === value &&
+      values.date === moment(calendar).format('YYYY-MM-DD') &&
+      (isChecked = !isChecked))
+
+    return isChecked
   }
 
   render() {
     const { classes, rowId, value, color } = this.props
     return <Button
-      className={value.selected ? classNames(classes[color]) : null}
+      className={this.isCheck(rowId, value) ? classNames(classes[color]) : null}
       onClick={() => this.handleClick(rowId, value)}
     >
       {value}
@@ -61,6 +75,8 @@ AddTimeButton.propTypes = {
   rowId: number.isRequired,
   value: string.isRequired,
   color: string.isRequired,
+  data: array.isRequired,
+  calendar: string.isRequired,
 }
 
 export default withStyles(styles)(connector(AddTimeButton))
