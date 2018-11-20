@@ -2,7 +2,6 @@
 import LocalStorage from 'services/LocalStorage'
 import { ADD_TIME, GET_ROWS, GET_TIME } from './action'
 import { isEmpty } from 'lodash'
-import moment from 'moment'
 
 
 let id = -1
@@ -41,20 +40,16 @@ const tableReducer = (state = initialState, { type, payload }) => {
       }
 
     case ADD_TIME: {
-      const { rows, data } = state
+      const { data } = state
 
-      rows.map(values =>
-        values.row.map(row =>
-          (values.id === payload.id && row === payload.value) &&
-          (data.map((values, index) =>
-            ((values.id === payload.id &&
-              values.time === payload.value &&
-              values.date === moment(payload.calendar)
-                .format('YYYY-MM-DD'))
-              ? (data.splice(index, 1))
-              : data.push({ id: payload.id, time: payload.value, date: payload.calendar }))))))
+      const indexSelected = data.findIndex(dataItem =>
+        dataItem.id === payload.id && dataItem.time === payload.value && dataItem.date === payload.calendar)
 
-      // data.push({ id: payload.id, time: payload.value, date: payload.calendar })
+      if (indexSelected > -1) {
+        data.splice(indexSelected, 1)
+      } else {
+        data.push({ id: payload.id, time: payload.value, date: payload.calendar })
+      }
 
       LocalStorage.put('data', data)
       return {
