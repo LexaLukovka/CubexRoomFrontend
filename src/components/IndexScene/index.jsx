@@ -2,7 +2,7 @@ import React from 'react'
 import { array, object } from 'prop-types'
 import { Card, withStyles } from '@material-ui/core'
 
-import MyCalendar from './MyCalendar'
+// import MyCalendar from './MyCalendar'
 import MyTableHead from './MyTableHead'
 import MyTableBody from './MyTableBody'
 
@@ -14,7 +14,7 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'space-around',
     marginTop: 30,
-    [theme.breakpoints.down('md ')]: {
+    [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
     },
   },
@@ -49,7 +49,7 @@ class IndexScene extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <MyCalendar />
+        {/*<MyCalendar />*/}
         <Card className={classes.card}>
           <div>
             <MyTableHead />

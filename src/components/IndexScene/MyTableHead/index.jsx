@@ -1,14 +1,18 @@
 import React from 'react'
 import { object, string } from 'prop-types'
-import { Paper, Typography, withStyles } from '@material-ui/core'
+import { Paper, TextField, withStyles } from '@material-ui/core'
 import SizeRoomButton from './SizeRoomButton'
-import checkSize from 'utils/checkSize'
 import connector from './connector'
 import classNames from 'classnames'
+import moment from 'moment'
 
 const styles = theme => ({
   paper: {
     marginBottom: 8,
+    textAlign: 'center',
+  },
+  input: {
+    color: 'white',
   },
   green: {
     padding: 7,
@@ -37,18 +41,36 @@ const styles = theme => ({
 })
 
 
-const MyTableHead = ({ classes, color }) =>
-  <React.Fragment>
-    <Paper className={classNames(classes[color], classes.paper)}>
-      <Typography align="center" color="inherit" variant="subheading">
-        Комната - {checkSize(color)} человек
-      </Typography>
-    </Paper>
-    <SizeRoomButton />
-  </React.Fragment>
+class MyTableHead extends React.Component {
+  handleSelect = (selectedDate) => {
+    const { actions } = this.props
+    actions.calendar.addDay(moment(selectedDate)
+      .format('YYYY-MM-DD'))
+  }
+
+  render() {
+    const { classes, color } = this.props
+    return (
+      <React.Fragment>
+        <Paper className={classNames(classes[color], classes.paper)}>
+          <TextField
+            type="date"
+            defaultValue={moment(new Date())
+              .format('YYYY-MM-DD')}
+            // classes={{ label: classes.input }}
+            onChange={(date) => this.handleSelect(date)}
+          />
+        </Paper>
+        <SizeRoomButton />
+      </React.Fragment>
+
+    )
+  }
+}
 
 MyTableHead.propTypes = {
   classes: object.isRequired,
+  actions: object.isRequired,
   color: string.isRequired,
 }
 
