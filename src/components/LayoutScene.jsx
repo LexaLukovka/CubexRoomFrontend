@@ -5,7 +5,9 @@ import withTheme from 'utils/withTheme'
 import Background from 'components/Background'
 import Header from 'components/Header'
 import Container from 'components/Container'
+
 import IndexScene from 'components/IndexScene'
+import AuthLayout from './@auth/AuthLayout'
 
 const LayoutScene = () =>
   <div>
@@ -14,6 +16,7 @@ const LayoutScene = () =>
       <Container>
         <Switch>
           <Route exact path="/" component={IndexScene} />
+          <Route path="/auth" component={AuthLayout} />
         </Switch>
       </Container>
     </Background>

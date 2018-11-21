@@ -4,6 +4,7 @@ import { object, string } from 'prop-types'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import { Toolbar, Typography, withStyles } from '@material-ui/core'
+import UserMenu from './UserMenu'
 import connector from './connector'
 
 const styles = theme => ({
@@ -32,6 +33,7 @@ const Header = ({ classes, color }) =>
           <Link to="/">Бронирование зала для заседаний</Link>
         </Typography>
 
+        <UserMenu />
       </Toolbar>
     </div>
   </header>
