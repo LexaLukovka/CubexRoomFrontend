@@ -40,8 +40,12 @@ const styles = theme => ({
 class AddTimeButton extends React.Component {
   handleClick = (value) => {
     const { actions, auth, color, calendar } = this.props
-    actions.table.addTime({ color, value, calendar, userId: auth.user._id })
-    actions.table.getTime()
+    if (auth.user) {
+      actions.table.addTime({ color, value, calendar, userId: auth.user._id })
+      actions.table.getTime()
+    } else {
+      actions.alert.show('Прежде чем забронировать зал, нужно ВОЙТИ')
+    }
   }
 
   isCheck = (value) => {
@@ -68,7 +72,6 @@ class AddTimeButton extends React.Component {
     </Button>
   }
 }
-
 
 AddTimeButton.propTypes = {
   classes: object.isRequired,

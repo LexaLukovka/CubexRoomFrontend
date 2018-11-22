@@ -12,18 +12,24 @@ export const LOGIN_USER_REJECTED = 'LOGIN_USER_REJECTED'
 
 export const LOGOUT_USER = 'LOGIN_USER'
 
-const register = (form) => ({
-  type: REGISTER_USER,
-  payload: Auth.register(form),
-})
+const register = (form) => async dispatch => {
+  await dispatch({
+    type: REGISTER_USER,
+    payload: Auth.register(form),
+  })
+  dispatch(alert.show('Вы вошли'))
+}
 
 
 // noinspection JSUnusedGlobalSymbols
-const login = (form) => ({
-  type: LOGIN_USER,
-  payload: Auth.login(form),
-})
+const login = (form) => async dispatch => {
+  await dispatch({
+    type: LOGIN_USER,
+    payload: Auth.login(form),
+  })
 
+  dispatch(alert.show('Вы вошли'))
+}
 
 // noinspection JSUnusedGlobalSymbols
 const logout = () => dispatch => {
@@ -32,6 +38,8 @@ const logout = () => dispatch => {
   })
 
   localStorage.setItem('user', JSON.stringify(null))
+  dispatch(alert.show('Вы вышли'))
 }
+
 
 export default { login, register, logout }

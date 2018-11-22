@@ -1,5 +1,5 @@
 import React from 'react'
-import { object, number, string, shape, func } from 'prop-types'
+import { func, number, object, shape, string } from 'prop-types'
 import { TextField } from '@material-ui/core'
 
 const FormikText = ({ field, form, ...props }) =>
