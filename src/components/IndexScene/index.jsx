@@ -1,7 +1,6 @@
 import React from 'react'
 import { array, object } from 'prop-types'
 import { Card, withStyles } from '@material-ui/core'
-
 // import MyCalendar from './MyCalendar'
 import MyTableHead from './MyTableHead'
 import MyTableBody from './MyTableBody'
@@ -14,14 +13,18 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'space-around',
     marginTop: 30,
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-    },
   },
   card: {
     padding: 20,
+    width: 600,
     height: '100%',
     background: 'rgba(255, 255, 255, 0.7)',
+    [theme.breakpoints.down('sm')]: {
+      width: '90%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '95%',
+    },
   },
 })
 

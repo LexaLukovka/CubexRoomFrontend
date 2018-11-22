@@ -65,8 +65,7 @@ class MyTableHead extends React.Component {
         <Paper className={classNames(classes[color], classes.paper)}>
           <TextField
             type="date"
-            defaultValue={moment(new Date())
-              .format('YYYY-MM-DD')}
+            defaultValue={moment(new Date()).format('YYYY-MM-DD')}
             inputProps={{ className: classes.input }}
             onChange={(event) => this.handleSelect(event)}
             InputProps={{

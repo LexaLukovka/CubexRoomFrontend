@@ -9,22 +9,33 @@ const styles = theme => ({
     padding: '0 20px',
     margin: 10,
     color: '#4caf50',
+    [theme.breakpoints.down('sm')]: {
+      margin: 0,
+    },
   },
   red: {
     padding: '0 20px',
     margin: 10,
     color: theme.palette.secondary.dark,
+    [theme.breakpoints.down('sm')]: {
+      margin: 0,
+    },
   },
   blue: {
     padding: '0 20px',
     margin: 10,
     color: theme.palette.primary.main,
-
+    [theme.breakpoints.down('sm')]: {
+      margin: 0,
+    },
   },
   purple: {
     padding: '0 20px',
     margin: 10,
     color: '#9c27b0',
+    [theme.breakpoints.down('sm')]: {
+      margin: 0,
+    },
   },
 })
 
