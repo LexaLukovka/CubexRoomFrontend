@@ -1,13 +1,19 @@
-/* eslint-disable no-shadow,no-return-assign,prefer-destructuring */
 import LocalStorage from 'services/LocalStorage'
-import { ADD_TIME, GET_ROWS, GET_TIME } from './action'
-import { isEmpty } from 'lodash'
+import {
+  ADD_TIME_FULFILLED,
+  ADD_TIME_PENDING,
+  ADD_TIME_REJECTED,
+  GET_ROWS,
+  GET_TIME_FULFILLED,
+  GET_TIME_PENDING,
+  GET_TIME_REJECTED,
+} from './action'
 
 const row = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00']
 
 const initialState = {
-  rows: LocalStorage.get('rows') || row,
-  data: LocalStorage.get('data') || [],
+  rows: row,
+  data: [],
 }
 
 const tableReducer = (state = initialState, { type, payload }) => {
@@ -18,30 +24,31 @@ const tableReducer = (state = initialState, { type, payload }) => {
         rows: LocalStorage.get('rows') || [],
       }
 
-    case GET_TIME:
+    case GET_TIME_PENDING:
+    case ADD_TIME_PENDING:
       return {
         ...state,
-        data: LocalStorage.get('data') || [],
+        loading: true,
       }
 
-    case ADD_TIME: {
-      const { data } = state
-
-      const indexSelected = data.findIndex(dataItem =>
-        dataItem.color === payload.color && dataItem.time === payload.value && dataItem.date === payload.calendar)
-
-      if (indexSelected > -1) {
-        data.splice(indexSelected, 1)
-      } else {
-        data.push({ color: payload.color, time: payload.value, date: payload.calendar })
-      }
-
-      LocalStorage.put('data', data)
+    case GET_TIME_REJECTED:
+    case ADD_TIME_REJECTED:
       return {
         ...state,
-        data,
+        loading: false,
+        error: true,
+        errors: payload,
+
       }
-    }
+
+    case GET_TIME_FULFILLED:
+    case ADD_TIME_FULFILLED:
+      return {
+        ...state,
+        loading: false,
+        data: payload.save,
+      }
+
 
     default: {
       return state
