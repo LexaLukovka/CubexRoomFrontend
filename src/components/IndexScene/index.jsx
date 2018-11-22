@@ -49,7 +49,6 @@ class IndexScene extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        {/*<MyCalendar />*/}
         <Card className={classes.card}>
           <div>
             <MyTableHead />

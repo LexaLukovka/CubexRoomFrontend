@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import store, { history } from './store'
 import LayoutScene from 'components/LayoutScene'
 import 'moment/locale/ru.js'
-import 'react-infinite-calendar/styles.css'
+
 
 const render = Component => {
   ReactDOM.render(

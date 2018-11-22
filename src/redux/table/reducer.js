@@ -31,9 +31,14 @@ const tableReducer = (state = initialState, { type, payload }) => {
         dataItem.color === payload.color && dataItem.time === payload.value && dataItem.date === payload.calendar)
 
       if (indexSelected > -1) {
-        data.splice(indexSelected, 1)
+        const indexUserSelected = data.findIndex(dataItem =>
+          dataItem.color === payload.color && dataItem.time === payload.value && dataItem.date === payload.calendar
+          && dataItem.userId === payload.userId)
+        if (indexUserSelected > -1) {
+          data.splice(indexSelected, 1)
+        }
       } else {
-        data.push({ color: payload.color, time: payload.value, date: payload.calendar })
+        data.push({ color: payload.color, time: payload.value, date: payload.calendar, userId: payload.userId })
       }
 
       LocalStorage.put('data', data)

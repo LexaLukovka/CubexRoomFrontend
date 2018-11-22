@@ -1,4 +1,4 @@
-/* eslint-disable no-return-assign */
+/* eslint-disable no-return-assign,no-underscore-dangle */
 import React from 'react'
 import { array, object, string } from 'prop-types'
 import classNames from 'classnames'
@@ -39,8 +39,8 @@ const styles = theme => ({
 
 class AddTimeButton extends React.Component {
   handleClick = (value) => {
-    const { actions, color, calendar } = this.props
-    actions.table.addTime({ color, value, calendar })
+    const { actions, auth, color, calendar } = this.props
+    actions.table.addTime({ color, value, calendar, userId: auth.user._id })
     actions.table.getTime()
   }
 
@@ -73,6 +73,7 @@ class AddTimeButton extends React.Component {
 AddTimeButton.propTypes = {
   classes: object.isRequired,
   actions: object.isRequired,
+  auth: object.isRequired,
   value: string.isRequired,
   color: string.isRequired,
   data: array.isRequired,

@@ -5,6 +5,7 @@ import layout from 'src/redux/layout/action'
 import header from 'src/redux/header/action'
 
 const initMapStateToProps = store => ({
+  auth: store.authReducer,
   rows: store.tableReducer.rows,
   data: store.tableReducer.data,
   calendar: store.calendarReducer.date,

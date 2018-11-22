@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react'
 import { object, string } from 'prop-types'
-import { Paper, TextField, withStyles } from '@material-ui/core'
+import { InputAdornment, Paper, TextField, withStyles } from '@material-ui/core'
+import { CalendarIcon } from 'mdi-react'
 import SizeRoomButton from './SizeRoomButton'
 import connector from './connector'
 import classNames from 'classnames'
@@ -13,6 +15,16 @@ const styles = theme => ({
   },
   input: {
     color: 'white',
+    outlined: 'none',
+    '&:active': {
+      outlined: 'none',
+    },
+    '&:hover': {
+      outlined: 'none',
+    },
+    '&:focus': {
+      outlined: 'none',
+    },
   },
   green: {
     padding: 7,
@@ -40,7 +52,6 @@ const styles = theme => ({
   },
 })
 
-
 class MyTableHead extends React.Component {
   handleSelect = (selectedDate) => {
     const { actions } = this.props
@@ -57,8 +68,13 @@ class MyTableHead extends React.Component {
             type="date"
             defaultValue={moment(new Date())
               .format('YYYY-MM-DD')}
-            // classes={{ label: classes.input }}
+            inputProps={{ className: classes.input }}
             onChange={(date) => this.handleSelect(date)}
+            InputProps={{
+              startAdornment: (<InputAdornment variant="outlined" position="start">
+                <CalendarIcon className={classes.input} />
+              </InputAdornment>),
+            }}
           />
         </Paper>
         <SizeRoomButton />
