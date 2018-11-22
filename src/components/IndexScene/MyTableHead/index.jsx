@@ -10,21 +10,11 @@ import moment from 'moment'
 
 const styles = theme => ({
   paper: {
-    marginBottom: 8,
+    marginBottom: 5,
     textAlign: 'center',
   },
   input: {
     color: 'white',
-    outlined: 'none',
-    '&:active': {
-      outlined: 'none',
-    },
-    '&:hover': {
-      outlined: 'none',
-    },
-    '&:focus': {
-      outlined: 'none',
-    },
   },
   green: {
     padding: 7,
@@ -53,10 +43,9 @@ const styles = theme => ({
 })
 
 class MyTableHead extends React.Component {
-  handleSelect = (selectedDate) => {
+  handleSelect = (event) => {
     const { actions } = this.props
-    actions.calendar.addDay(moment(selectedDate)
-      .format('YYYY-MM-DD'))
+    actions.calendar.addDay(moment(event.target.value).format('YYYY-MM-DD'))
   }
 
   render() {
@@ -66,10 +55,9 @@ class MyTableHead extends React.Component {
         <Paper className={classNames(classes[color], classes.paper)}>
           <TextField
             type="date"
-            defaultValue={moment(new Date())
-              .format('YYYY-MM-DD')}
+            defaultValue={moment(new Date()).format('YYYY-MM-DD')}
             inputProps={{ className: classes.input }}
-            onChange={(date) => this.handleSelect(date)}
+            onChange={(event) => this.handleSelect(event)}
             InputProps={{
               startAdornment: (<InputAdornment variant="outlined" position="start">
                 <CalendarIcon className={classes.input} />
@@ -77,6 +65,7 @@ class MyTableHead extends React.Component {
             }}
           />
         </Paper>
+
         <SizeRoomButton />
       </React.Fragment>
 
