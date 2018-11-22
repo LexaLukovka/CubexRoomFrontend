@@ -10,21 +10,11 @@ import moment from 'moment'
 
 const styles = theme => ({
   paper: {
-    marginBottom: 8,
+    marginBottom: 5,
     textAlign: 'center',
   },
   input: {
     color: 'white',
-    outlined: 'none',
-    '&:active': {
-      outlined: 'none',
-    },
-    '&:hover': {
-      outlined: 'none',
-    },
-    '&:focus': {
-      outlined: 'none',
-    },
   },
   green: {
     padding: 7,
@@ -65,8 +55,7 @@ class MyTableHead extends React.Component {
         <Paper className={classNames(classes[color], classes.paper)}>
           <TextField
             type="date"
-            defaultValue={moment(new Date())
-              .format('YYYY-MM-DD')}
+            defaultValue={moment(new Date()).format('YYYY-MM-DD')}
             inputProps={{ className: classes.input }}
             onChange={(event) => this.handleSelect(event)}
             InputProps={{
@@ -76,6 +65,7 @@ class MyTableHead extends React.Component {
             }}
           />
         </Paper>
+
         <SizeRoomButton />
       </React.Fragment>
 

@@ -1,4 +1,5 @@
 import Auth from 'services/api/Auth'
+import * as alert from 'src/redux/alert/action'
 
 export const REGISTER_USER = 'REGISTER_USER'
 export const REGISTER_USER_PENDING = 'REGISTER_USER_PENDING'
@@ -12,6 +13,7 @@ export const LOGIN_USER_REJECTED = 'LOGIN_USER_REJECTED'
 
 export const LOGOUT_USER = 'LOGIN_USER'
 
+// noinspection JSUnusedGlobalSymbols
 const register = (form) => async dispatch => {
   await dispatch({
     type: REGISTER_USER,

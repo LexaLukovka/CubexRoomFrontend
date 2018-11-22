@@ -1,6 +1,7 @@
 import React from 'react'
+import { object } from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
-import { Button, CardActions, CardContent, Typography } from '@material-ui/core'
+import { Button, CardActions, CardContent, Typography, withStyles } from '@material-ui/core'
 
 import { Field, Form } from 'formik'
 import FormikText from 'components/@auth/formik/FormikText'
@@ -9,7 +10,18 @@ import FormikPassword from 'components/@auth/formik/FormikPassword'
 import formik from './formik'
 import connector from '../../connector'
 
-const RegisterForm = () =>
+const styles = theme => ({
+  button: {
+    '&:hover': {
+      background: theme.palette.primary.light,
+    },
+  },
+  link: {
+    padding: 5,
+  },
+})
+
+const RegisterForm = ({ classes }) =>
   <Form>
     <CardContent>
       <Field
@@ -34,14 +46,22 @@ const RegisterForm = () =>
       />
     </CardContent>
     <CardActions>
-      <Button fullWidth variant="contained" type="submit" color="primary">
+      <Button fullWidth variant="contained" type="submit" color="primary" className={classes.button}>
         <Typography color="secondary">Зарегистрироваться</Typography>
       </Button>
     </CardActions>
     <Link to="/auth/login">
-      <Typography style={{ paddingTop: 5 }} gutterBottom align="center">Есть аккаунт</Typography>
+      <Typography className={classes.link} gutterBottom align="center">Есть аккаунт</Typography>
     </Link>
   </Form>
 
+RegisterForm.propTypes = {
+  classes: object.isRequired,
+}
 
-export default connector(withRouter(formik(RegisterForm)))
+const formiks = formik(RegisterForm)
+const router = withRouter(formiks)
+const connect = connector(router)
+const style = withStyles(styles)(connect)
+
+export default style
