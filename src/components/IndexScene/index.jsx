@@ -35,6 +35,7 @@ class IndexScene extends React.Component {
     document.title = 'Cubex'
 
     actions.table.getRows()
+    actions.table.getTime()
 
     if (!LocalStorage.get('rows')) {
       LocalStorage.put('rows', rows)
