@@ -41,7 +41,7 @@ class AddTimeButton extends React.Component {
   handleClick = (value) => {
     const { actions, auth, color, calendar } = this.props
     if (auth.user) {
-      actions.table.addTime({ color, value, calendar, userId: auth.user._id })
+      actions.table.addTime({ hall: color, time: value, date: calendar, userId: auth.user._id })
       actions.table.getTime()
     } else {
       actions.alert.show('Прежде чем забронировать зал, нужно ВОЙТИ')
@@ -53,7 +53,7 @@ class AddTimeButton extends React.Component {
     let isChecked = false
 
     data.map(values =>
-      values.color === color &&
+      values.hall === color &&
       values.time === value &&
       values.date === moment(calendar)
         .format('YYYY-MM-DD') &&
