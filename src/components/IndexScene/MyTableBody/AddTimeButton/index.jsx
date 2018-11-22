@@ -1,4 +1,4 @@
-/* eslint-disable no-return-assign */
+/* eslint-disable no-return-assign,no-underscore-dangle */
 import React from 'react'
 import { array, object, string } from 'prop-types'
 import classNames from 'classnames'
@@ -39,9 +39,13 @@ const styles = theme => ({
 
 class AddTimeButton extends React.Component {
   handleClick = (value) => {
-    const { actions, color, calendar } = this.props
-    actions.table.addTime({ color, value, calendar })
-    actions.table.getTime()
+    const { actions, auth, color, calendar } = this.props
+    if (auth.user) {
+      actions.table.addTime({ hall: color, time: value, date: calendar, userId: auth.user._id })
+      actions.table.getTime()
+    } else {
+      actions.alert.show('Прежде чем забронировать зал, нужно ВОЙТИ')
+    }
   }
 
   isCheck = (value) => {
@@ -49,7 +53,7 @@ class AddTimeButton extends React.Component {
     let isChecked = false
 
     data.map(values =>
-      values.color === color &&
+      values.hall === color &&
       values.time === value &&
       values.date === moment(calendar)
         .format('YYYY-MM-DD') &&
@@ -69,10 +73,10 @@ class AddTimeButton extends React.Component {
   }
 }
 
-
 AddTimeButton.propTypes = {
   classes: object.isRequired,
   actions: object.isRequired,
+  auth: object.isRequired,
   value: string.isRequired,
   color: string.isRequired,
   data: array.isRequired,

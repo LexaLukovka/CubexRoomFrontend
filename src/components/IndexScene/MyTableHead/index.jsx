@@ -1,14 +1,20 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react'
 import { object, string } from 'prop-types'
-import { Paper, Typography, withStyles } from '@material-ui/core'
+import { InputAdornment, Paper, TextField, withStyles } from '@material-ui/core'
+import { CalendarIcon } from 'mdi-react'
 import SizeRoomButton from './SizeRoomButton'
-import checkSize from 'utils/checkSize'
 import connector from './connector'
 import classNames from 'classnames'
+import moment from 'moment'
 
 const styles = theme => ({
   paper: {
-    marginBottom: 8,
+    marginBottom: 5,
+    textAlign: 'center',
+  },
+  input: {
+    color: 'white',
   },
   green: {
     padding: 7,
@@ -36,19 +42,40 @@ const styles = theme => ({
   },
 })
 
+class MyTableHead extends React.Component {
+  handleSelect = (event) => {
+    const { actions } = this.props
+    actions.calendar.addDay(moment(event.target.value).format('YYYY-MM-DD'))
+  }
 
-const MyTableHead = ({ classes, color }) =>
-  <React.Fragment>
-    <Paper className={classNames(classes[color], classes.paper)}>
-      <Typography align="center" color="inherit" variant="subheading">
-        Комната - {checkSize(color)} человек
-      </Typography>
-    </Paper>
-    <SizeRoomButton />
-  </React.Fragment>
+  render() {
+    const { classes, color } = this.props
+    return (
+      <React.Fragment>
+        <Paper className={classNames(classes[color], classes.paper)}>
+          <TextField
+            type="date"
+            defaultValue={moment(new Date()).format('YYYY-MM-DD')}
+            inputProps={{ className: classes.input }}
+            onChange={(event) => this.handleSelect(event)}
+            InputProps={{
+              startAdornment: (<InputAdornment variant="outlined" position="start">
+                <CalendarIcon className={classes.input} />
+              </InputAdornment>),
+            }}
+          />
+        </Paper>
+
+        <SizeRoomButton />
+      </React.Fragment>
+
+    )
+  }
+}
 
 MyTableHead.propTypes = {
   classes: object.isRequired,
+  actions: object.isRequired,
   color: string.isRequired,
 }
 
