@@ -1,7 +1,6 @@
 import React from 'react'
 import { array, object } from 'prop-types'
 import { Card, withStyles } from '@material-ui/core'
-// import MyCalendar from './MyCalendar'
 import MyTableHead from './MyTableHead'
 import MyTableBody from './MyTableBody'
 
@@ -16,7 +15,6 @@ const styles = theme => ({
   },
   card: {
     padding: 20,
-    width: 600,
     height: '100%',
     background: 'rgba(255, 255, 255, 0.7)',
     [theme.breakpoints.down('sm')]: {
