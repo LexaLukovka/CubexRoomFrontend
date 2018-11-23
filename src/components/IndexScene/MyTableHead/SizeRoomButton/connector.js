@@ -5,6 +5,7 @@ import header from 'src/redux/header/action'
 
 const initMapStateToProps = store => ({
   layout: store.layoutReducer,
+  halls: store.hallReducer.halls,
 })
 
 const initMapDispatchToProps = dispatch => ({

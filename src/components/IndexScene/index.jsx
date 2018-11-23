@@ -34,6 +34,8 @@ class IndexScene extends React.Component {
 
     document.title = 'Cubex'
 
+    actions.hall.getHall()
+
     actions.table.getRows()
     actions.table.getTime()
 

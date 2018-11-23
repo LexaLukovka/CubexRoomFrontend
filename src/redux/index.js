@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 
 import authReducer from './auth/reducer'
+import hallReducer from './hall/reducer'
 import tableReducer from './table/reducer'
 import calendarReducer from './calendar/reducer'
 
@@ -10,6 +11,7 @@ import headerReducer from './header/reducer'
 
 const reducers = combineReducers({
   authReducer,
+  hallReducer,
   tableReducer,
   calendarReducer,
 
