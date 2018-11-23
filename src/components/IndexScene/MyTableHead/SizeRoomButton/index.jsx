@@ -70,8 +70,9 @@ class SizeRoomButton extends React.Component {
         indicatorColor="secondary"
         onChange={this.handleChange}
       >
-        {halls.map(hall =>
+        {halls.map((hall, index) =>
           <Tab
+            key={index}
             className={classNames(classes[hall.color])}
             onClick={() => this.handleClick(hall.color)}
             label={hall.hall}
