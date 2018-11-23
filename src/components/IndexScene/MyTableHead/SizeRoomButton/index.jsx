@@ -1,6 +1,7 @@
 import React from 'react'
-import { object } from 'prop-types'
+import { array, object } from 'prop-types'
 import { Tab, Tabs, withStyles } from '@material-ui/core'
+import classNames from 'classnames'
 import connector from './connector'
 
 const styles = theme => ({
@@ -59,7 +60,7 @@ class SizeRoomButton extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, halls } = this.props
     const { value } = this.state
 
     return (
@@ -69,10 +70,12 @@ class SizeRoomButton extends React.Component {
         indicatorColor="secondary"
         onChange={this.handleChange}
       >
-        <Tab className={classes.green} onClick={() => this.handleClick('green')} label="До 5" />
-        <Tab className={classes.red} onClick={() => this.handleClick('red')} label="До 15" />
-        <Tab className={classes.blue} onClick={() => this.handleClick('blue')} label="До 25" />
-        <Tab className={classes.purple} onClick={() => this.handleClick('purple')} label="От 25" />
+        {halls.map(hall =>
+          <Tab
+            className={classNames(classes[hall.color])}
+            onClick={() => this.handleClick(hall.color)}
+            label={hall.hall}
+          />)}
       </Tabs>
     )
   }
@@ -81,6 +84,7 @@ class SizeRoomButton extends React.Component {
 SizeRoomButton.propTypes = {
   classes: object.isRequired,
   actions: object.isRequired,
+  halls: array.isRequired,
 }
 
 export default withStyles(styles)(connector(SizeRoomButton))
